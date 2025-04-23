@@ -1,32 +1,9 @@
-
 import React, { useState } from 'react';
 import GlitchText from './GlitchText';
 import RevealOnScroll from './RevealOnScroll';
 
 // Featured works gallery – now includes your 4 provided images
 const portfolioItems = [
-  // Original gallery
-  {
-    title: "NeoBank UI Kit",
-    description: "Mobile finance dashboard",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
-    title: "Pixel Verse",
-    description: "Immersive digital art exploration",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
-    title: "TaskMaster Pro",
-    description: "B2B dashboard UX",
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
-    title: "Bold Brand Launch",
-    description: "Animated brand story visuals",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  // User-uploaded featured works
   {
     title: "Project Dashboard",
     description: "UI dashboard for project management",
@@ -130,4 +107,3 @@ const PortfolioSection = () => {
 };
 
 export default PortfolioSection;
-

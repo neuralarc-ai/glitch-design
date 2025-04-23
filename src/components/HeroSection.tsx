@@ -1,10 +1,12 @@
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import GlitchText from './GlitchText';
 import { Button } from '@/components/ui/button';
 import RevealOnScroll from './RevealOnScroll';
+import DiscoveryCallModal from './DiscoveryCallModal';
 
 const HeroSection = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <section className="relative min-h-screen flex items-center justify-center p-6">
       {/* Glitch Overlay */}
@@ -16,7 +18,6 @@ const HeroSection = () => {
             backgroundSize: '40px 40px'
           }}></div>
         </div>
-        
         {/* Animated horizontal interference lines */}
         <div className="absolute inset-0">
           {Array.from({ length: 20 }).map((_, i) => (
@@ -34,7 +35,6 @@ const HeroSection = () => {
           ))}
         </div>
       </div>
-      
       <div className="container z-10 max-w-5xl text-center">
         <RevealOnScroll>
           <GlitchText 
@@ -44,22 +44,25 @@ const HeroSection = () => {
             className="text-5xl sm:text-6xl md:text-7xl font-bold mb-4 text-white tracking-wider"
           />
         </RevealOnScroll>
-        
         <RevealOnScroll delay={200}>
           <p className="text-xl sm:text-2xl md:text-3xl mb-10 text-gray-300 font-light">
             Where Ideas Break the Algorithm
           </p>
         </RevealOnScroll>
-        
         <RevealOnScroll delay={400} className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button className="glitch-button text-lg" variant="outline">
             View Our Work
           </Button>
-          <Button className="glitch-button text-lg" variant="outline">
+          <Button
+            className="glitch-button text-lg"
+            variant="outline"
+            onClick={() => setModalOpen(true)}
+          >
             Book a Discovery Call
           </Button>
         </RevealOnScroll>
       </div>
+      <DiscoveryCallModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   );
 };
