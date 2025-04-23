@@ -1,4 +1,3 @@
-
 import React from "react";
 import RevealOnScroll from "./RevealOnScroll";
 import GlitchText from "./GlitchText";

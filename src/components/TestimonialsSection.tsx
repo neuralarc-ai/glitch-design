@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import GlitchText from './GlitchText';
 import RevealOnScroll from './RevealOnScroll';
@@ -36,7 +35,7 @@ const TestimonialsSection = () => {
           <GlitchText
             text="Distorted. Delivered. Devoured."
             element="h2"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center text-white" // Added text-center
           />
         </RevealOnScroll>
         <p className="text-center max-w-2xl mx-auto text-lg mb-8 text-glitch-acid-green/80 font-light">

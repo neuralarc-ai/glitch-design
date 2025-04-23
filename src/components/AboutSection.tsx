@@ -11,7 +11,7 @@ const AboutSection = () => {
           <GlitchText
             text="We Break, Then Build."
             element="h2"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-white"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-white text-center" // Added text-center
           />
         </RevealOnScroll>
 
