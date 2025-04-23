@@ -41,11 +41,11 @@ const HeroSection = () => {
             text="GLITCH DESIGN"
             element="h1"
             glitchEffect="heavy"
-            className="text-5xl sm:text-6xl md:text-7xl font-bold mb-4 text-white tracking-wider"
+            className="text-5xl sm:text-6xl md:text-7xl font-bold mb-4 text-white tracking-wider text-center" // Added text-center
           />
         </RevealOnScroll>
         <RevealOnScroll delay={200}>
-          <p className="text-2xl sm:text-3xl md:text-4xl mb-10 text-glitch-electric-blue font-light glitch-hero-cap line-clamp-3">
+          <p className="text-2xl sm:text-3xl md:text-4xl mb-10 text-glitch-electric-blue font-light glitch-hero-cap line-clamp-3 text-center">
             Born to disrupt. Built for outliers.<br />
             This is branding for the bold.
           </p>
