@@ -1,38 +1,36 @@
-
 import React from 'react';
 import GlitchText from './GlitchText';
 import RevealOnScroll from './RevealOnScroll';
-import { BrandGithub } from 'lucide-react';
 
-// Import the proper icons
+// Import valid icons from lucide-react that match our needs
 import { 
-  BrandIdentity, 
-  UiUxDesign,
-  MotionGraphics, 
-  GalleryHorizontal 
+  Palette, 
+  Layout,
+  Film, 
+  Sparkles 
 } from 'lucide-react';
 
 const services = [
   {
-    icon: BrandIdentity,
+    icon: Palette,
     title: "Brand Identity",
     description: "Logos, style guides, tone of voice",
     color: "glitch-neon-pink"
   },
   {
-    icon: UiUxDesign,
+    icon: Layout,
     title: "UI/UX Design",
     description: "Interfaces that feel like instinct",
     color: "glitch-electric-blue"
   },
   {
-    icon: MotionGraphics,
+    icon: Film,
     title: "Motion Graphics",
     description: "Kinetic stories, digital rhythm",
     color: "glitch-acid-green"
   },
   {
-    icon: GalleryHorizontal,
+    icon: Sparkles,
     title: "Digital Art",
     description: "Glitch-infused, abstract, immersive visuals",
     color: "glitch-neon-pink"
