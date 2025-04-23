@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import GlitchText from './GlitchText';
 import RevealOnScroll from './RevealOnScroll';
 
+// Featured works gallery – now includes your 4 provided images
 const portfolioItems = [
+  // Original gallery
   {
     title: "NeoBank UI Kit",
     description: "Mobile finance dashboard",
@@ -23,7 +25,28 @@ const portfolioItems = [
     title: "Bold Brand Launch",
     description: "Animated brand story visuals",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&h=400&q=80"
-  }
+  },
+  // User-uploaded featured works
+  {
+    title: "Project Dashboard",
+    description: "UI dashboard for project management",
+    image: "/lovable-uploads/82af9673-1b2a-4676-b482-2a44aedd8368.png"
+  },
+  {
+    title: "Glitch Studio Gallery",
+    description: "Bold modern landing – Brand & Strategy",
+    image: "/lovable-uploads/3d5f9cda-8922-4582-b325-cda099c754f8.png"
+  },
+  {
+    title: "SYNTHIKA & Investment",
+    description: "Branding, growth, investment dashboards",
+    image: "/lovable-uploads/9ddb7119-d663-4dec-b84a-75f903c3cccc.png"
+  },
+  {
+    title: "Brikon Onboarding",
+    description: "Creative solution for startups, onboarding flow",
+    image: "/lovable-uploads/b2f4b73a-ed63-4c9d-a39a-4a511f8e8b6e.png"
+  },
 ];
 
 const PortfolioSection = () => {
@@ -107,3 +130,4 @@ const PortfolioSection = () => {
 };
 
 export default PortfolioSection;
+
