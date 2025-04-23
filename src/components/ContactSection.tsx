@@ -8,30 +8,48 @@ import { Button } from '@/components/ui/button';
 import { Instagram, Linkedin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+function generateCaptcha() {
+  // random 4-digit code
+  return (Math.floor(1000 + Math.random() * 9000)).toString();
+}
+
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    captchaInput: '',
   });
-  
+
+  const [captchaCode, setCaptchaCode] = useState(generateCaptcha());
   const { toast } = useToast();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    // Validate captcha
+    if (formData.captchaInput !== captchaCode) {
+      toast({
+        title: "Incorrect Captcha",
+        description: "Please enter the correct captcha code.",
+      });
+      setCaptchaCode(generateCaptcha()); // refresh code
+      setFormData(prev => ({ ...prev, captchaInput: '' }));
+      return;
+    }
+    // Simulated send
     toast({
       title: "Message sent!",
       description: "We'll get back to you as soon as possible.",
     });
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', message: '', captchaInput: '' });
+    setCaptchaCode(generateCaptcha());
   };
-  
+
   return (
     <section id="contact" className="py-20 relative">
       <div className="container max-w-5xl mx-auto px-6">
@@ -77,6 +95,31 @@ const ContactSection = () => {
                     value={formData.message}
                     onChange={handleChange}
                     className="glitch-input min-h-[120px]"
+                    required
+                  />
+                </div>
+
+                {/* Captcha */}
+                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <span className="rounded bg-gray-900 px-3 py-2 font-mono text-lg tracking-widest text-glitch-neon-pink select-none">{captchaCode}</span>
+                    <button
+                      type="button"
+                      onClick={() => setCaptchaCode(generateCaptcha())}
+                      className="text-xs text-glitch-neon-pink underline hover:no-underline"
+                      tabIndex={-1}
+                      aria-label="Refresh captcha code"
+                    >
+                      Refresh
+                    </button>
+                  </div>
+                  <Input
+                    name="captchaInput"
+                    placeholder="Enter captcha"
+                    value={formData.captchaInput}
+                    onChange={handleChange}
+                    className="glitch-input"
+                    autoComplete="off"
                     required
                   />
                 </div>
