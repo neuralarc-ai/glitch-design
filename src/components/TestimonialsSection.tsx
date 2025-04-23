@@ -5,44 +5,46 @@ import RevealOnScroll from './RevealOnScroll';
 
 const testimonials = [
   {
-    quote: "Glitch took our brand from zero to cult status.",
+    quote: "Glitch Design turned our static into pure signal. Never felt more seen.",
     client: "VFX.ai"
   },
   {
-    quote: "Nobody understands interface storytelling like they do.",
+    quote: "Their visual storytelling hits like a bug in the Matrix—but perfectly on brand.",
     client: "FutureWare"
   },
   {
-    quote: "A beautifully chaotic design studio.",
+    quote: "They made us look more futuristic than our own roadmap.",
     client: "ModularMuse"
   }
 ];
 
 const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <section id="testimonials" className="py-20 relative">
       <div className="container max-w-5xl mx-auto px-6">
         <RevealOnScroll>
-          <GlitchText 
-            text="Distorted. Delivered." 
-            element="h2" 
+          <GlitchText
+            text="Distorted. Delivered. Devoured."
+            element="h2"
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center text-white"
           />
         </RevealOnScroll>
-        
+        <p className="text-center max-w-2xl mx-auto text-lg mb-8 text-glitch-acid-green/80 font-light">
+          Don’t just take our word for it—these digital pioneers plugged in, glitched out, and leveled up. Here’s what they said after their own signal boost.
+        </p>
         <div className="relative h-40">
           {testimonials.map((testimonial, index) => (
-            <div 
+            <div
               key={index}
               className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${
                 activeIndex === index ? 'opacity-100 transform-none' : 'opacity-0 translate-y-8'
@@ -57,7 +59,6 @@ const TestimonialsSection = () => {
             </div>
           ))}
         </div>
-        
         <div className="flex justify-center mt-10 space-x-2">
           {testimonials.map((_, index) => (
             <button

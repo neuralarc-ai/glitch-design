@@ -1,167 +1,103 @@
 
-import React, { useState } from 'react';
-import GlitchText from './GlitchText';
-import RevealOnScroll from './RevealOnScroll';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Instagram, Linkedin } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-
-function generateCaptcha() {
-  // random 4-digit code
-  return (Math.floor(1000 + Math.random() * 9000)).toString();
-}
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import Captcha from "./Captcha";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-    captchaInput: '',
-  });
-
-  const [captchaCode, setCaptchaCode] = useState(generateCaptcha());
   const { toast } = useToast();
-  
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+    captcha: "",
+  });
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  };
+
+  const handleCaptchaChange = (valid: boolean, value: string) => {
+    setCaptchaValid(valid);
+    setForm(f => ({ ...f, captcha: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate captcha
-    if (formData.captchaInput !== captchaCode) {
+    if (!captchaValid) {
       toast({
-        title: "Incorrect Captcha",
-        description: "Please enter the correct captcha code.",
+        title: "Captcha failed",
+        description: "Please solve the captcha correctly.",
+        variant: "destructive",
       });
-      setCaptchaCode(generateCaptcha()); // refresh code
-      setFormData(prev => ({ ...prev, captchaInput: '' }));
       return;
     }
-    // Simulated send
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    setFormData({ name: '', email: '', message: '', captchaInput: '' });
-    setCaptchaCode(generateCaptcha());
+    setSubmitting(true);
+    setTimeout(() => {
+      toast({
+        title: "Message sent!",
+        description: "We'll reply with a signal—never static.",
+      });
+      setForm({ name: "", email: "", message: "", captcha: "" });
+      setCaptchaValid(false);
+      setSubmitting(false);
+    }, 900);
   };
 
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="container max-w-5xl mx-auto px-6">
-        <RevealOnScroll>
-          <GlitchText 
-            text="Get in Touch. Let's Distort the Norm." 
-            element="h2" 
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-center text-white"
-          />
-        </RevealOnScroll>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <RevealOnScroll>
-            <div className="glitch-card p-6 rounded-lg h-full">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Input
-                    name="name"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="glitch-input"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="glitch-input"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <Textarea
-                    name="message"
-                    placeholder="Project Idea"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="glitch-input min-h-[120px]"
-                    required
-                  />
-                </div>
-
-                {/* Captcha */}
-                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="rounded bg-gray-900 px-3 py-2 font-mono text-lg tracking-widest text-glitch-neon-pink select-none">{captchaCode}</span>
-                    <button
-                      type="button"
-                      onClick={() => setCaptchaCode(generateCaptcha())}
-                      className="text-xs text-glitch-neon-pink underline hover:no-underline"
-                      tabIndex={-1}
-                      aria-label="Refresh captcha code"
-                    >
-                      Refresh
-                    </button>
-                  </div>
-                  <Input
-                    name="captchaInput"
-                    placeholder="Enter captcha"
-                    value={formData.captchaInput}
-                    onChange={handleChange}
-                    className="glitch-input"
-                    autoComplete="off"
-                    required
-                  />
-                </div>
-                
-                <Button type="submit" className="glitch-button w-full">
-                  Send Message
-                </Button>
-              </form>
+    <section className="py-20 bg-glitch-dark/80 relative" id="contact">
+      <div className="container max-w-3xl mx-auto px-6">
+        <div className="glitch-card p-8 rounded-lg shadow-xl">
+          <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-white mb-2 text-center">
+            Get In Touch
+          </h2>
+          <p className="text-center mb-8 text-glitch-neon-pink font-light text-lg">
+            Got a wild idea or burning question? <span className="font-bold">Break the ice. Start a glitch.</span>
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              name="name"
+              placeholder="Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="glitch-input"
+              disabled={submitting}
+            />
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="glitch-input"
+              disabled={submitting}
+            />
+            <Textarea
+              name="message"
+              placeholder="Your message"
+              value={form.message}
+              onChange={handleChange}
+              className="glitch-input min-h-[100px]"
+              required
+              disabled={submitting}
+            />
+            <Captcha disabled={submitting} onResult={handleCaptchaChange} />
+            <div className="flex justify-end mt-6">
+              <Button
+                type="submit"
+                className="glitch-button text-lg"
+                disabled={submitting}
+              >
+                {submitting ? "Sending..." : "Send Message"}
+              </Button>
             </div>
-          </RevealOnScroll>
-          
-          <RevealOnScroll delay={200}>
-            <div className="flex flex-col justify-between h-full">
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-4 text-white">Let's Connect</h3>
-                <p className="text-gray-400 mb-6">
-                  Ready to push the boundaries of digital design? We're here to bring your boldest ideas to life with our distorted touch.
-                </p>
-                
-                <div className="space-y-4">
-                  <a href="mailto:hello@glitchdesign.com" className="block text-gray-300 hover:text-glitch-neon-pink transition-colors">
-                    hello@glitchdesign.com
-                  </a>
-                  <a href="tel:+12345678901" className="block text-gray-300 hover:text-glitch-neon-pink transition-colors">
-                    +1 (234) 567-8901
-                  </a>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-medium mb-4 text-white">Follow Us</h4>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full border border-glitch-outline hover:border-glitch-neon-pink transition-colors">
-                    <Instagram className="text-gray-300 hover:text-glitch-neon-pink transition-colors" size={20} />
-                  </a>
-                  <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full border border-glitch-outline hover:border-glitch-neon-pink transition-colors">
-                    <Linkedin className="text-gray-300 hover:text-glitch-neon-pink transition-colors" size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </RevealOnScroll>
+          </form>
         </div>
       </div>
     </section>

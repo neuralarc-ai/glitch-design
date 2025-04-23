@@ -21,7 +21,7 @@ const HeroSection = () => {
         {/* Animated horizontal interference lines */}
         <div className="absolute inset-0">
           {Array.from({ length: 20 }).map((_, i) => (
-            <div 
+            <div
               key={i}
               className="absolute h-px bg-glitch-neon-pink/30 w-full"
               style={{
@@ -37,16 +37,17 @@ const HeroSection = () => {
       </div>
       <div className="container z-10 max-w-5xl text-center">
         <RevealOnScroll>
-          <GlitchText 
-            text="GLITCH DESIGN" 
-            element="h1" 
+          <GlitchText
+            text="GLITCH DESIGN"
+            element="h1"
             glitchEffect="heavy"
             className="text-5xl sm:text-6xl md:text-7xl font-bold mb-4 text-white tracking-wider"
           />
         </RevealOnScroll>
         <RevealOnScroll delay={200}>
-          <p className="text-xl sm:text-2xl md:text-3xl mb-10 text-gray-300 font-light">
-            Where Ideas Break the Algorithm
+          <p className="text-2xl sm:text-3xl md:text-4xl mb-10 text-glitch-electric-blue font-light glitch-hero-cap line-clamp-3">
+            Born to disrupt. Built for outliers.<br />
+            This is branding for the bold.
           </p>
         </RevealOnScroll>
         <RevealOnScroll delay={400} className="flex flex-col sm:flex-row items-center justify-center gap-4">
