@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -27,7 +26,7 @@ const DiscoveryCallModal: React.FC<DiscoveryCallModalProps> = ({ open, onOpenCha
     setForm(f => ({ ...f, captcha: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaValid) {
       toast({
@@ -37,17 +36,43 @@ const DiscoveryCallModal: React.FC<DiscoveryCallModalProps> = ({ open, onOpenCha
       });
       return;
     }
+
     setSubmitting(true);
-    setTimeout(() => {
-      toast({
-        title: "Discovery call booked!",
-        description: "We'll contact you soon to confirm your appointment.",
+    try {
+      const response = await fetch('/api/discovery-call', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          details: form.details,
+        }),
       });
-      setForm({ name: "", email: "", details: "", captcha: "" });
-      setCaptchaValid(false);
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Discovery call booked!",
+          description: "We'll contact you soon to confirm your appointment.",
+        });
+        setForm({ name: "", email: "", details: "", captcha: "" });
+        setCaptchaValid(false);
+        onOpenChange(false);
+      } else {
+        throw new Error(data.error || 'Failed to send request');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send your request. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setSubmitting(false);
-      onOpenChange(false);
-    }, 800);
+    }
   };
 
   return (
@@ -58,7 +83,7 @@ const DiscoveryCallModal: React.FC<DiscoveryCallModalProps> = ({ open, onOpenCha
             Book a Discovery Call
           </DialogTitle>
           <p className="text-gray-400 mb-2 text-sm">
-            Plug into our frequency—just a few details and we’ll reach back within one business day. Let’s break something ordinary and build something legendary together.
+            Plug into our frequency—just a few details and we'll reach back within one business day. Let's break something ordinary and build something legendary together.
           </p>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -98,7 +123,7 @@ const DiscoveryCallModal: React.FC<DiscoveryCallModalProps> = ({ open, onOpenCha
               </Button>
             </DialogClose>
             <Button type="submit" className="glitch-button" disabled={submitting}>
-              {submitting ? "Booking..." : "Book Now"}
+              {submitting ? "Sending..." : "Book Now"}
             </Button>
           </div>
         </form>

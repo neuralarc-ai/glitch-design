@@ -108,7 +108,7 @@
   
   .glitch-card::before {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 -z-10;
     background: linear-gradient(
       to bottom,
       transparent 0%,
@@ -121,7 +121,7 @@
   }
   
   .glitch-input {
-    @apply bg-transparent border-glitch-outline border focus:border-glitch-neon-pink focus:ring-0 transition-colors duration-300;
+    @apply bg-transparent border-glitch-outline border focus:border-glitch-neon-pink focus:ring-0 transition-colors duration-300 z-50;
   }
   
   .glitch-button {

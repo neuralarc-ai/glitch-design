@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,7 +25,7 @@ const ContactSection = () => {
     setForm(f => ({ ...f, captcha: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaValid) {
       toast({
@@ -36,16 +35,43 @@ const ContactSection = () => {
       });
       return;
     }
+
     setSubmitting(true);
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "We'll reply with a signal—never static.",
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
       });
-      setForm({ name: "", email: "", message: "", captcha: "" });
-      setCaptchaValid(false);
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Message sent!",
+          description: "We'll reply with a signal—never static.",
+        });
+        setForm({ name: "", email: "", message: "", captcha: "" });
+        setCaptchaValid(false);
+      } else {
+        throw new Error(data.error || 'Failed to send message');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send your message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setSubmitting(false);
-    }, 900);
+    }
   };
 
   return (
@@ -65,7 +91,7 @@ const ContactSection = () => {
               value={form.name}
               onChange={handleChange}
               required
-              className="glitch-input"
+              className="glitch-input bg-transparent border-glitch-neon-pink/50 focus:border-glitch-neon-pink text-white placeholder:text-gray-400"
               disabled={submitting}
             />
             <Input
@@ -75,7 +101,7 @@ const ContactSection = () => {
               value={form.email}
               onChange={handleChange}
               required
-              className="glitch-input"
+              className="glitch-input bg-transparent border-glitch-neon-pink/50 focus:border-glitch-neon-pink text-white placeholder:text-gray-400"
               disabled={submitting}
             />
             <Textarea
@@ -83,7 +109,7 @@ const ContactSection = () => {
               placeholder="Your message"
               value={form.message}
               onChange={handleChange}
-              className="glitch-input min-h-[100px]"
+              className="glitch-input min-h-[100px] bg-transparent border-glitch-neon-pink/50 focus:border-glitch-neon-pink text-white placeholder:text-gray-400"
               required
               disabled={submitting}
             />
