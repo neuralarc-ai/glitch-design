@@ -11,7 +11,8 @@ const transporter = nodemailer.createTransport({
   logger: true
 });
 
-module.exports = async function handler(req, res) {
+// Standard Vercel serverless function handler
+const handler = async (req, res) => {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -215,4 +216,6 @@ module.exports = async function handler(req, res) {
       code: error.code
     });
   }
-} 
+};
+
+module.exports = handler; 
